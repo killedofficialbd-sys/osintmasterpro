@@ -1,0 +1,3749 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>OSINT Master Pro - Платформа обучения OSINT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2f 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Навигация */
+        .navbar {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background: rgba(10, 15, 30, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            transform: rotate(10deg);
+            transition: transform 0.3s;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(0deg);
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 10px;
+            color: #888;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #4facfe;
+        }
+
+        .nav-links a i {
+            font-size: 16px;
+        }
+
+        /* Иконка админа */
+        .admin-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff4444, #ff8888);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 10px;
+            border: 2px solid transparent;
+        }
+
+        .admin-icon:hover {
+            transform: scale(1.1);
+            border-color: white;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+        }
+
+        .admin-icon i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #4facfe;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: #4facfe;
+            color: white;
+        }
+
+        /* Герой секция */
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #b0b0b0;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Категории */
+        .categories {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: #4facfe;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(79, 172, 254, 0.05);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #00f2fe20, #4facfe20);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #4facfe;
+            margin-bottom: 15px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .category-count {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* Обучение */
+        .training {
+            padding: 60px 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .training-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .training-card:hover {
+            transform: translateY(-5px);
+            border-color: #4facfe;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .training-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+        }
+
+        .training-badge {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .training-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .training-description {
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .training-meta {
+            display: flex;
+            gap: 15px;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .training-meta i {
+            color: #4facfe;
+            margin-right: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 1s;
+        }
+
+        .training-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .training-score {
+            color: #4facfe;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Задания */
+        .challenges {
+            padding: 60px 0;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+            border: 1px solid #4facfe;
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.2);
+        }
+
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(79, 172, 254, 0.2), transparent);
+            pointer-events: none;
+        }
+
+        .challenge-icon {
+            font-size: 36px;
+            color: #4facfe;
+            margin-bottom: 15px;
+        }
+
+        .challenge-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .challenge-description {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .challenge-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #888;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        .challenge-meta i {
+            color: #4facfe;
+            margin-right: 5px;
+        }
+
+        .challenge-btn {
+            background: transparent;
+            border: 2px solid #4facfe;
+            color: #4facfe;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 15px;
+        }
+
+        .challenge-btn:hover {
+            background: #4facfe;
+            color: white;
+        }
+
+        .challenge-btn.completed {
+            background: #4facfe;
+            color: white;
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .challenge-reward {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(79, 172, 254, 0.2);
+            border: 1px solid #4facfe;
+            border-radius: 20px;
+            padding: 4px 12px;
+            color: #4facfe;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Страница задания */
+        .challenge-page {
+            padding: 30px 0;
+            display: none;
+        }
+
+        .challenge-page.active {
+            display: block;
+        }
+
+        .challenge-header {
+            margin-bottom: 30px;
+        }
+
+        .challenge-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            text-decoration: none;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .challenge-back:hover {
+            color: #4facfe;
+        }
+
+        .challenge-detail-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .challenge-detail-meta {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .challenge-detail-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .challenge-detail-meta-item i {
+            color: #4facfe;
+            font-size: 18px;
+        }
+
+        .challenge-steps {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .challenge-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .challenge-step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid #4facfe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #4facfe;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .step-description {
+            color: #b0b0b0;
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .step-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .step-input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .step-check-btn {
+            background: transparent;
+            border: 2px solid #4facfe;
+            color: #4facfe;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .step-check-btn:hover:not(:disabled) {
+            background: #4facfe;
+            color: white;
+        }
+
+        .step-check-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .step-status {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .step-status.success {
+            display: block;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+
+        .step-status.error {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .challenge-complete {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.2), rgba(0, 242, 254, 0.2));
+            border-radius: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .challenge-complete.show {
+            display: block;
+        }
+
+        .challenge-complete i {
+            font-size: 50px;
+            color: #4facfe;
+            margin-bottom: 15px;
+        }
+
+        .challenge-complete h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .challenge-complete p {
+            color: #b0b0b0;
+            font-size: 16px;
+        }
+
+        /* Страница модуля */
+        .module-page {
+            padding: 30px 0;
+            display: none;
+        }
+
+        .module-page.active {
+            display: block;
+        }
+
+        .module-header {
+            margin-bottom: 30px;
+        }
+
+        .module-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            text-decoration: none;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .module-back:hover {
+            color: #4facfe;
+        }
+
+        .module-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .module-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .module-progress-bar {
+            flex: 1;
+            min-width: 150px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .module-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .module-progress-text {
+            color: #4facfe;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .lesson-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .lesson-card:hover {
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.05);
+        }
+
+        .lesson-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            flex-wrap: wrap;
+        }
+
+        .lesson-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #4facfe;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4facfe;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            background: transparent;
+        }
+
+        .lesson-check.completed {
+            background: #4facfe;
+            color: white;
+        }
+
+        .lesson-check i {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .lesson-check.completed i {
+            opacity: 1;
+        }
+
+        .lesson-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .lesson-duration {
+            color: #888;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .lesson-content {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .lesson-card.expanded .lesson-content {
+            display: block;
+        }
+
+        .lesson-content h4 {
+            color: #4facfe;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .lesson-content p {
+            color: #b0b0b0;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .lesson-content ul {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .lesson-content li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lesson-content li i {
+            color: #4facfe;
+            width: 18px;
+        }
+
+        .lesson-content .code-block {
+            background: #1a1f2f;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            margin: 12px 0;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+
+        .lesson-expand {
+            color: #4facfe;
+            cursor: pointer;
+            margin-top: 8px;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        .lesson-expand i {
+            margin-right: 5px;
+        }
+
+        /* Ресурсы */
+        .resources {
+            padding: 60px 0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.05);
+        }
+
+        .resource-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4facfe;
+            margin-bottom: 8px;
+        }
+
+        .resource-description {
+            color: #b0b0b0;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .resource-meta i {
+            color: #4facfe;
+            margin-right: 4px;
+        }
+
+        /* Термины */
+        .terms {
+            padding: 60px 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .term-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .term-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4facfe;
+            margin-bottom: 8px;
+        }
+
+        .term-definition {
+            color: #b0b0b0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Статистика */
+        .stats-section {
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-card i {
+            font-size: 36px;
+            color: #4facfe;
+            margin-bottom: 15px;
+        }
+
+        .stats-card h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #fff, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-card p {
+            color: #888;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Футер */
+        .footer {
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: block;
+            color: white;
+        }
+
+        .footer-description {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #4facfe;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1f2f;
+            border: 1px solid #4facfe;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 22px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #4facfe;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4facfe;
+            margin-bottom: 12px;
+            padding-right: 25px;
+        }
+
+        .modal-description {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .modal-info {
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid #4facfe;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .modal-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            font-size: 13px;
+        }
+
+        .modal-info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-info-item i {
+            color: #4facfe;
+            width: 18px;
+        }
+
+        .modal-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .modal-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        /* Админ панель */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #4facfe;
+        }
+
+        .admin-header h2 {
+            color: #4facfe;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .admin-close:hover {
+            color: #ff4444;
+        }
+
+        .admin-login {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1f2f;
+            border: 2px solid #4facfe;
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 3100;
+        }
+
+        .admin-login h3 {
+            color: #4facfe;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .admin-input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .admin-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .admin-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79,172,254,0.3);
+        }
+
+        .admin-error {
+            color: #ff4444;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .admin-tab {
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .admin-tab:hover {
+            border-color: #4facfe;
+            color: #4facfe;
+        }
+
+        .admin-tab.active {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-stat-card {
+            background: rgba(79,172,254,0.1);
+            border: 1px solid #4facfe;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .admin-stat-card h4 {
+            color: #4facfe;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .admin-stat-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .admin-table {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        .admin-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(79,172,254,0.1);
+            color: #4facfe;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-badge {
+            background: rgba(79,172,254,0.2);
+            color: #4facfe;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .admin-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-online {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .status-offline {
+            background: #888;
+        }
+
+        .admin-log-entry {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .admin-log-time {
+            color: #4facfe;
+            margin-right: 10px;
+        }
+
+        .admin-log-ip {
+            color: #888;
+            margin-right: 10px;
+        }
+
+        .admin-log-action {
+            color: white;
+        }
+
+        .admin-edit-form {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .admin-edit-form input,
+        .admin-edit-form textarea,
+        .admin-edit-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: white;
+        }
+
+        .admin-edit-form button {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Музыкальный плеер */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 31, 47, 0.95);
+            border: 1px solid #4facfe;
+            border-radius: 60px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .music-player button {
+            background: none;
+            border: none;
+            color: #4facfe;
+            font-size: 20px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .music-player button:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: scale(1.1);
+        }
+
+        .music-player .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 30px;
+        }
+
+        .music-player .volume-slider {
+            width: 80px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .music-player .volume-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border-radius: 2px;
+            width: 70%;
+            transition: width 0.1s;
+        }
+
+        .music-player .volume-percent {
+            color: #4facfe;
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .music-player .playing-indicator {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .music-player .playing-indicator span {
+            width: 3px;
+            height: 3px;
+            background: #4facfe;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        .music-player .playing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .music-player .playing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Адаптивность для плеера */
+        @media (max-width: 480px) {
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                justify-content: space-between;
+                padding: 8px 12px;
+            }
+            
+            .music-player .volume-control {
+                flex: 1;
+            }
+            
+            .music-player .volume-slider {
+                width: 100%;
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .training-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+                width: 100%;
+            }
+            
+            .nav-links a {
+                font-size: 13px;
+                padding: 5px 8px;
+                background: rgba(255,255,255,0.03);
+                border-radius: 20px;
+            }
+            
+            .nav-links a i {
+                font-size: 14px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 15px;
+                padding: 0 15px;
+            }
+            
+            .section-title {
+                font-size: 26px;
+            }
+            
+            .section-subtitle {
+                font-size: 14px;
+                padding: 0 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .training-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .terms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-title {
+                font-size: 26px;
+            }
+            
+            .lesson-header {
+                flex-wrap: wrap;
+            }
+            
+            .lesson-title {
+                width: 100%;
+                order: 1;
+                font-size: 15px;
+            }
+            
+            .lesson-duration {
+                order: 2;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .hero-content {
+                padding: 0 15px;
+            }
+            
+            .training-card {
+                padding: 25px;
+            }
+            
+            .module-progress {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .module-progress-bar {
+                width: 100%;
+            }
+            
+            .module-progress-text {
+                white-space: normal;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+            
+            .challenge-step {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .step-number {
+                margin-bottom: 5px;
+            }
+            
+            .challenge-detail-meta {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 18px;
+            }
+            
+            .logo-text p {
+                display: none;
+            }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .nav-links {
+                gap: 8px;
+            }
+            
+            .nav-links a {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 14px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .training-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .stats-card h3 {
+                font-size: 28px;
+            }
+            
+            .stats-card i {
+                font-size: 30px;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .modal-info-item {
+                font-size: 13px;
+            }
+            
+            .challenge-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .challenge-detail-title {
+                font-size: 26px;
+            }
+            
+            .challenge-detail-meta-item {
+                font-size: 13px;
+            }
+            
+            .step-title {
+                font-size: 16px;
+            }
+            
+            .step-input {
+                font-size: 14px;
+                padding: 10px;
+            }
+            
+            .step-check-btn {
+                width: 100%;
+            }
+            
+            .footer {
+                padding: 30px 0 15px;
+            }
+            
+            .footer-logo {
+                font-size: 16px;
+            }
+            
+            .footer-title {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo" onclick="showMainPage()">
+                    <div class="logo-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>OSINT Master Pro</h1>
+                        <p>Платформа обучения OSINT</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a onclick="showMainPage()"><i class="fas fa-home"></i> Главная</a>
+                    <a onclick="scrollToSection('categories')"><i class="fas fa-folder-tree"></i> Категории</a>
+                    <a onclick="scrollToSection('training')"><i class="fas fa-graduation-cap"></i> Обучение</a>
+                    <a onclick="scrollToSection('challenges')"><i class="fas fa-trophy"></i> Задания</a>
+                    <a onclick="scrollToSection('resources')"><i class="fas fa-database"></i> Ресурсы</a>
+                    <a onclick="scrollToSection('terms')"><i class="fas fa-book"></i> Термины</a>
+                    <!-- Иконка админа -->
+                    <div class="admin-icon" onclick="showAdminLogin()" title="Панель администратора">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главная страница -->
+    <div id="mainPage">
+        <!-- Герой секция -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>OSINT Master Pro</h1>
+                    <p>Полноценная платформа для обучения OSINT. 12 модулей, 86 уроков, 200+ инструментов и полная система отслеживания прогресса</p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="scrollToSection('training')">
+                            <i class="fas fa-play"></i> Начать обучение
+                        </button>
+                        <button class="btn btn-outline" onclick="scrollToSection('challenges')">
+                            <i class="fas fa-trophy"></i> Испытать себя
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Категории -->
+        <section id="categories" class="categories">
+            <div class="container">
+                <h2 class="section-title">📚 Категории знаний</h2>
+                <p class="section-subtitle">Все инструменты OSINT в одном месте. Кликните на категорию для подробностей.</p>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Категории будут загружаться динамически через JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Обучение -->
+        <section id="training" class="training">
+            <div class="container">
+                <h2 class="section-title">🎓 Модули обучения</h2>
+                <p class="section-subtitle">12 модулей, 86 уроков. Кликните на модуль чтобы начать</p>
+                
+                <div class="training-grid" id="modulesGrid">
+                    <!-- Модули будут загружаться динамически через JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Задания -->
+        <section id="challenges" class="challenges">
+            <div class="container">
+                <h2 class="section-title">🏆 Практические задания</h2>
+                <p class="section-subtitle">Проверьте свои навыки в реальных сценариях</p>
+                
+                <div class="challenges-grid" id="challengesGrid">
+                    <!-- Задания будут загружаться динамически -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Ресурсы -->
+        <section id="resources" class="resources">
+            <div class="container">
+                <h2 class="section-title">🔗 Полезные ресурсы</h2>
+                <p class="section-subtitle">Инструменты и сервисы для OSINT</p>
+                <div class="resources-grid" id="resourcesGrid">
+                    <!-- Ресурсы будут загружаться динамически -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Термины -->
+        <section id="terms" class="terms">
+            <div class="container">
+                <h2 class="section-title">📖 Терминология</h2>
+                <p class="section-subtitle">Основные понятия OSINT</p>
+                <div class="terms-grid" id="termsGrid">
+                    <!-- Термины будут загружаться динамически -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Статистика -->
+        <section class="stats-section">
+            <div class="container">
+                <h2 class="section-title">📊 Статистика платформы</h2>
+                <p class="section-subtitle">Объем нашей базы знаний</p>
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <i class="fas fa-database"></i>
+                        <h3>1,200+</h3>
+                        <p>Инструментов</p>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-folder"></i>
+                        <h3>200+</h3>
+                        <p>Категорий</p>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>86</h3>
+                        <p>Уроков</p>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>12</h3>
+                        <p>Заданий</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Страницы модулей (будут создаваться динамически) -->
+    <div id="modulePages"></div>
+
+    <!-- Страницы заданий -->
+    <div id="challengePages"></div>
+
+    <!-- Модальное окно для ресурсов, категорий и заданий -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Панель администрации -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-header">
+            <h2><i class="fas fa-shield-alt"></i> OSINT Master Pro - Панель администратора</h2>
+            <button class="admin-close" onclick="closeAdminPanel()"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchAdminTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Дашборд</button>
+            <button class="admin-tab" onclick="switchAdminTab('visitors')"><i class="fas fa-users"></i> Посетители</button>
+            <button class="admin-tab" onclick="switchAdminTab('logs')"><i class="fas fa-history"></i> Логи действий</button>
+            <button class="admin-tab" onclick="switchAdminTab('stats')"><i class="fas fa-chart-bar"></i> Статистика</button>
+            <button class="admin-tab" onclick="switchAdminTab('settings')"><i class="fas fa-cog"></i> Настройки</button>
+        </div>
+        
+        <div id="adminDashboard" class="admin-content active">
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                    <h4>Активных посетителей</h4>
+                    <div class="value" id="activeVisitorsCount">0</div>
+                </div>
+                <div class="admin-stat-card">
+                    <h4>Всего посетителей</h4>
+                    <div class="value" id="totalVisitorsCount">0</div>
+                </div>
+                <div class="admin-stat-card">
+                    <h4>Пройдено уроков</h4>
+                    <div class="value" id="totalLessonsCompleted">0</div>
+                </div>
+                <div class="admin-stat-card">
+                    <h4>Выполнено заданий</h4>
+                    <div class="value" id="totalChallengesCompleted">0</div>
+                </div>
+            </div>
+            
+            <h3 style="color: #4facfe; margin-bottom: 20px;">Сейчас на сайте</h3>
+            <div class="admin-table" id="activeVisitorsTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>IP адрес</th>
+                            <th>Страна</th>
+                            <th>Город</th>
+                            <th>Провайдер</th>
+                            <th>Устройство</th>
+                            <th>Текущая страница</th>
+                            <th>Время на сайте</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activeVisitorsBody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div id="adminVisitors" class="admin-content">
+            <h3 style="color: #4facfe; margin-bottom: 20px;">Все посетители</h3>
+            <div class="admin-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>IP адрес</th>
+                            <th>Страна</th>
+                            <th>Город</th>
+                            <th>Провайдер</th>
+                            <th>Браузер</th>
+                            <th>ОС</th>
+                            <th>Первый визит</th>
+                            <th>Последний визит</th>
+                            <th>Кол-во визитов</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allVisitorsBody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div id="adminLogs" class="admin-content">
+            <h3 style="color: #4facfe; margin-bottom: 20px;">Логи действий</h3>
+            <div style="margin-bottom: 15px;">
+                <input type="text" class="admin-input" placeholder="Поиск по логам..." style="width: 300px;" id="logSearch" onkeyup="filterLogs()">
+            </div>
+            <div id="logsContainer"></div>
+        </div>
+        
+        <div id="adminStats" class="admin-content">
+            <h3 style="color: #4facfe; margin-bottom: 20px;">Детальная статистика</h3>
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                    <h4>Среднее время на сайте</h4>
+                    <div class="value" id="avgTime">0 мин</div>
+                </div>
+                <div class="admin-stat-card">
+                    <h4>Самый активный IP</h4>
+                    <div class="value" id="mostActiveIP">-</div>
+                </div>
+                <div class="admin-stat-card">
+                    <h4>Всего действий</h4>
+                    <div class="value" id="totalActions">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="adminSettings" class="admin-content">
+            <h3 style="color: #4facfe; margin-bottom: 20px;">Настройки</h3>
+            <div class="admin-edit-form">
+                <h4 style="color: white; margin-bottom: 15px;">Безопасность</h4>
+                <input type="password" id="newAdminPassword" placeholder="Новый пароль администратора">
+                <input type="password" id="confirmAdminPassword" placeholder="Подтвердите пароль">
+                <button onclick="changeAdminPassword()">Сменить пароль</button>
+                
+                <h4 style="color: white; margin: 20px 0 15px;">Очистка данных</h4>
+                <button style="background: #ff4444;" onclick="clearAllData()">Очистить все данные</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Форма входа в админку -->
+    <div id="adminLogin" class="admin-login" style="display: none;">
+        <h3><i class="fas fa-lock"></i> Вход в панель администратора</h3>
+        <input type="text" class="admin-input" id="adminUsername" placeholder="Логин" value="Разработчик">
+        <input type="password" class="admin-input" id="adminPassword" placeholder="Пароль">
+        <button class="admin-login-btn" onclick="adminLogin()">Войти</button>
+        <div id="adminLoginError" class="admin-error"></div>
+    </div>
+
+    <!-- УЛУЧШЕННЫЙ Музыкальный плеер -->
+    <div class="music-player">
+        <button id="playPauseBtn" onclick="toggleMusic()">
+            <i class="fas fa-play"></i>
+        </button>
+        
+        <div class="playing-indicator" id="playingIndicator" style="display: none;">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div class="volume-control">
+            <i class="fas fa-volume-down" style="color: #4facfe; font-size: 14px;"></i>
+            <div class="volume-slider" onclick="setVolume(event)">
+                <div class="volume-fill" id="volumeFill" style="width: 70%"></div>
+            </div>
+            <i class="fas fa-volume-up" style="color: #4facfe; font-size: 14px;"></i>
+        </div>
+        
+        <span class="volume-percent" id="volumePercent">70%</span>
+        
+        <button onclick="toggleMute()">
+            <i class="fas fa-volume-up" id="volumeIcon"></i>
+        </button>
+        
+        <audio id="bgMusic" loop>
+            <source src="music/music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-eye"></i> OSINT Master Pro
+                    </div>
+                    <p class="footer-description">Крупнейшая платформа обучения OSINT. Полный курс от новичка до профессионала.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Разделы</h4>
+                    <ul class="footer-links">
+                        <li><a onclick="showMainPage()">Главная</a></li>
+                        <li><a onclick="scrollToSection('categories')">Категории</a></li>
+                        <li><a onclick="scrollToSection('training')">Обучение</a></li>
+                        <li><a onclick="scrollToSection('challenges')">Задания</a></li>
+                        <li><a onclick="scrollToSection('resources')">Ресурсы</a></li>
+                        <li><a onclick="scrollToSection('terms')">Термины</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Информация</h4>
+                    <ul class="footer-links">
+                        <li><a onclick="alert('Раздел в разработке')">О проекте</a></li>
+                        <li><a onclick="alert('Раздел в разработке')">Помощь</a></li>
+                        <li><a onclick="alert('Раздел в разработке')">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Статистика</h4>
+                    <ul class="footer-links">
+                        <li>12 модулей</li>
+                        <li>86 уроков</li>
+                        <li>12 заданий</li>
+                        <li>1200+ инструментов</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>OSINT Master Pro - Платформа обучения OSINT</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API URL
+        const API_URL = '/api.php';
+
+        // Данные категорий - ПОЛНАЯ ВЕРСИЯ
+        const categories = [
+            { 
+                name: "OSINT Фреймворки", 
+                icon: "fas fa-sitemap", 
+                count: "15+", 
+                description: "Структурированные коллекции инструментов и ресурсов для OSINT-исследований.",
+                details: "OSINT фреймворки предоставляют организованную структуру для проведения разведки по открытым источникам. Они группируют инструменты по категориям: поиск людей, социальные сети, email, домены, IP-адреса и многое другое.",
+                tools: ["OSINT Framework", "IntelTechniques", "Recon-ng", "SpiderFoot", "Maltego"],
+                useCases: ["Структурирование расследований", "Быстрый доступ к инструментам", "Обучение OSINT"]
+            },
+            { 
+                name: "Поисковые системы", 
+                icon: "fas fa-search", 
+                count: "20+", 
+                description: "Специализированные поисковые системы для поиска информации.",
+                details: "Помимо Google и Yandex, существуют специализированные поисковые системы для поиска устройств (Shodan), файлов, людей и другой специфической информации.",
+                tools: ["Google", "Yandex", "Bing", "DuckDuckGo", "Shodan", "Censys", "ZoomEye"],
+                useCases: ["Поиск информации", "Разведка", "Анализ данных"]
+            },
+            { 
+                name: "Email разведка", 
+                icon: "fas fa-envelope", 
+                count: "18+", 
+                description: "Инструменты для поиска и верификации email адресов.",
+                details: "Email разведка включает поиск email-адресов по домену, проверку их валидности, а также поиск утечек данных, связанных с email.",
+                tools: ["Hunter.io", "EmailHippo", "HaveIBeenPwned", "Dehashed", "LeakCheck"],
+                useCases: ["Поиск контактов", "Проверка утечек", "Верификация"]
+            },
+            { 
+                name: "Телефонная разведка", 
+                icon: "fas fa-phone", 
+                count: "12+", 
+                description: "Сервисы для получения информации по номерам телефонов.",
+                details: "Позволяют определить страну, оператора, регион, а иногда и личные данные, связанные с номером телефона.",
+                tools: ["PhoneInfoga", "NumBuster", "GetContact", "Sync.ME", "Truecaller"],
+                useCases: ["Определение оператора", "Поиск информации", "Верификация"]
+            },
+            { 
+                name: "Поиск людей", 
+                icon: "fas fa-users", 
+                count: "25+", 
+                description: "Инструменты для поиска информации о людях.",
+                details: "Позволяют находить профили в социальных сетях, контактные данные, публичные записи и другую информацию о человеке.",
+                tools: ["Pipl", "Spokeo", "Whitepages", "PeekYou", "ZabaSearch", "WebMii"],
+                useCases: ["Поиск людей", "Расследования", "Проверка контактов"]
+            },
+            { 
+                name: "Социальные сети", 
+                icon: "fab fa-facebook", 
+                count: "30+", 
+                description: "Инструменты для анализа социальных сетей.",
+                details: "Специализированные инструменты для поиска, мониторинга и анализа активности в социальных сетях, включая поиск по никам, геолокации и контенту.",
+                tools: ["Social-Searcher", "TweetDeck", "Facebook Graph Search", "Instagram Explorer", "LinkedIn Helper"],
+                useCases: ["Мониторинг", "Поиск профилей", "Анализ активности"]
+            },
+            { 
+                name: "Геолокация", 
+                icon: "fas fa-map-marker-alt", 
+                count: "22+", 
+                description: "Инструменты для определения местоположения и анализа карт.",
+                details: "Позволяют определять координаты по фото, анализировать спутниковые снимки, находить объекты на картах и проводить геопространственную разведку.",
+                tools: ["Google Earth", "Yandex Maps", "GeoSpy", "Pic2Map", "SunCalc", "MapChecking"],
+                useCases: ["Определение мест", "Анализ фото", "Планирование"]
+            },
+            { 
+                name: "Анализ изображений", 
+                icon: "fas fa-image", 
+                count: "16+", 
+                description: "Инструменты для анализа и поиска по изображениям.",
+                details: "Включают обратный поиск изображений, анализ метаданных (EXIF), выявление подделок и поиск дубликатов.",
+                tools: ["Google Images", "Yandex Images", "TinEye", "FotoForensics", "Jeffreys Image Metadata Viewer"],
+                useCases: ["Поиск источников", "Проверка подлинности", "Анализ метаданных"]
+            },
+            { 
+                name: "Анализ доменов", 
+                icon: "fas fa-globe", 
+                count: "20+", 
+                description: "Инструменты для сбора информации о доменах и IP-адресах.",
+                details: "Позволяют получать WHOIS-данные, историю DNS, поддомены, информацию о хостинге и связанные ресурсы.",
+                tools: ["Whois", "ViewDNS", "SecurityTrails", "DNSDumpster", "Shodan", "Censys"],
+                useCases: ["Разведка", "Аудит безопасности", "Поиск поддоменов"]
+            },
+            { 
+                name: "Dark Web", 
+                icon: "fas fa-mask", 
+                count: "14+", 
+                description: "Ресурсы для поиска информации в даркнете.",
+                details: "Инструменты и поисковые системы для доступа к скрытым сервисам, форумам и базам данных в сети Tor и других анонимных сетях.",
+                tools: ["Ahmia", "OnionLand", "DarkSearch", "Torch", "Haystack"],
+                useCases: ["Мониторинг утечек", "Поиск данных", "Анализ угроз"]
+            },
+            { 
+                name: "Инструменты", 
+                icon: "fas fa-tools", 
+                count: "35+", 
+                description: "Различные утилиты для OSINT-исследований.",
+                details: "Набор программ и скриптов для автоматизации сбора и анализа данных из открытых источников.",
+                tools: ["Recon-ng", "theHarvester", "Maltego", "SpiderFoot", "Creepy", "Metagoofil"],
+                useCases: ["Автоматизация", "Сбор данных", "Анализ"]
+            },
+            { 
+                name: "Русские ресурсы", 
+                icon: "fas fa-flag", 
+                count: "28+", 
+                description: "Российские сервисы и базы данных для OSINT.",
+                details: "Специализированные ресурсы для поиска информации о российских компаниях, людях и объектах.",
+                tools: ["VK API", "OK API", "ЕГРЮЛ", "СБИС", "Контур.Фокус", "Rusprofile"],
+                useCases: ["Поиск в РФ", "Проверка контрагентов", "Анализ"]
+            },
+            { 
+                name: "Криптовалюты", 
+                icon: "fas fa-bitcoin", 
+                count: "10+", 
+                description: "Инструменты для анализа криптовалютных транзакций.",
+                details: "Позволяют отслеживать транзакции, анализировать кошельки и выявлять связи в блокчейн-сетях.",
+                tools: ["Blockchain Explorer", "Chainalysis", "Crystal", "OXT", "WalletExplorer"],
+                useCases: ["Анализ транзакций", "Отслеживание", "Расследования"]
+            },
+            { 
+                name: "Компании", 
+                icon: "fas fa-building", 
+                count: "18+", 
+                description: "Инструменты для сбора информации о компаниях.",
+                details: "Поиск данных о регистрации, финансовых показателях, руководстве, аффилированных лицах и судебных делах.",
+                tools: ["OpenCorporates", "Kompass", "Bloomberg", "Crunchbase", "ZoomInfo"],
+                useCases: ["Анализ рынка", "Проверка контрагентов", "Конкурентная разведка"]
+            },
+            { 
+                name: "Судебные данные", 
+                icon: "fas fa-gavel", 
+                count: "12+", 
+                description: "Базы данных судебных решений и исполнительных производств.",
+                details: "Поиск информации о судебных делах, арбитраже, исполнительных производствах и банкротствах.",
+                tools: ["СудАкт", "Картотека арбитражных дел", "ФССП", "PACER", "CaseLaw"],
+                useCases: ["Юридические расследования", "Проверка благонадежности", "Анализ"]
+            }
+        ];
+
+        // Данные модулей - РАСШИРЕННАЯ ВЕРСИЯ
+        const modules = [
+            {
+                id: 1,
+                title: "Основы OSINT",
+                description: "Изучите базовые принципы открытой разведки, юридические аспекты и методологию.",
+                lessons: 8,
+                duration: "3.5 часа",
+                icon: "fas fa-graduation-cap",
+                lessonsList: [
+                    {
+                        id: 1,
+                        title: "Введение в OSINT",
+                        duration: "20 мин",
+                        content: `
+                            <h4>Что такое OSINT?</h4>
+                            <p>OSINT (Open Source Intelligence) - это разведка на основе открытых источников информации. Это метод сбора и анализа данных из общедоступных источников.</p>
+                            <h4>Основные принципы:</h4>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Легальность - работа только с открытыми данными</li>
+                                <li><i class="fas fa-check"></i> Верификация - проверка достоверности информации</li>
+                                <li><i class="fas fa-check"></i> Системность - структурированный подход</li>
+                                <li><i class="fas fa-check"></i> Этика - соблюдение моральных норм</li>
+                            </ul>
+                            <h4>Источники OSINT:</h4>
+                            <ul>
+                                <li><i class="fas fa-globe"></i> Интернет и поисковые системы</li>
+                                <li><i class="fas fa-newspaper"></i> СМИ и новостные сайты</li>
+                                <li><i class="fas fa-users"></i> Социальные сети</li>
+                                <li><i class="fas fa-database"></i> Государственные базы данных</li>
+                                <li><i class="fas fa-map"></i> Геопространственные данные</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 2,
+                        title: "Правовые аспекты OSINT",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Законность сбора информации</h4>
+                            <p>Важно понимать правовые границы при сборе информации. OSINT работает только с открытыми источниками.</p>
+                            <h4>Что можно делать:</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle" style="color: #4facfe"></i> Собирать публичную информацию</li>
+                                <li><i class="fas fa-check-circle" style="color: #4facfe"></i> Анализировать открытые данные</li>
+                                <li><i class="fas fa-check-circle" style="color: #4facfe"></i> Использовать общедоступные API</li>
+                            </ul>
+                            <h4>Чего нельзя делать:</h4>
+                            <ul>
+                                <li><i class="fas fa-times-circle" style="color: #ff4444"></i> Взламывать аккаунты</li>
+                                <li><i class="fas fa-times-circle" style="color: #ff4444"></i> Использовать конфиденциальные данные</li>
+                                <li><i class="fas fa-times-circle" style="color: #ff4444"></i> Нарушать законы о приватности</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 3,
+                        title: "Этика в разведке",
+                        duration: "20 мин",
+                        content: `
+                            <h4>Этические принципы OSINT-специалиста</h4>
+                            <ul>
+                                <li><i class="fas fa-shield-alt"></i> Не навреди - используй знания ответственно</li>
+                                <li><i class="fas fa-eye"></i> Прозрачность - указывай цели сбора</li>
+                                <li><i class="fas fa-balance-scale"></i> Беспристрастность - не искажай факты</li>
+                                <li><i class="fas fa-heart"></i> Уважение - соблюдай права человека</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 4,
+                        title: "Методология сбора данных",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Цикл OSINT:</h4>
+                            <ol style="list-style: none; padding-left: 0;">
+                                <li style="margin-bottom: 10px;"><i class="fas fa-1" style="color: #4facfe; margin-right: 10px;"></i> Планирование - определение целей</li>
+                                <li style="margin-bottom: 10px;"><i class="fas fa-2" style="color: #4facfe; margin-right: 10px;"></i> Сбор - получение данных</li>
+                                <li style="margin-bottom: 10px;"><i class="fas fa-3" style="color: #4facfe; margin-right: 10px;"></i> Обработка - структурирование</li>
+                                <li style="margin-bottom: 10px;"><i class="fas fa-4" style="color: #4facfe; margin-right: 10px;"></i> Анализ - выявление закономерностей</li>
+                                <li style="margin-bottom: 10px;"><i class="fas fa-5" style="color: #4facfe; margin-right: 10px;"></i> Отчет - представление результатов</li>
+                            </ol>
+                        `
+                    },
+                    {
+                        id: 5,
+                        title: "Источники открытых данных",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Типы источников:</h4>
+                            <ul>
+                                <li><i class="fas fa-search"></i> Поисковые системы (Google, Yandex, Bing)</li>
+                                <li><i class="fas fa-archive"></i> Архивы (Wayback Machine)</li>
+                                <li><i class="fas fa-file-alt"></i> Документы и публикации</li>
+                                <li><i class="fas fa-database"></i> Открытые базы данных</li>
+                                <li><i class="fas fa-satellite"></i> Спутниковые снимки</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 6,
+                        title: "Верификация информации",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Методы проверки:</h4>
+                            <ul>
+                                <li><i class="fas fa-check-double"></i> Кросс-проверка по нескольким источникам</li>
+                                <li><i class="fas fa-calendar"></i> Проверка дат и временных меток</li>
+                                <li><i class="fas fa-map-pin"></i> Геолокация и координаты</li>
+                                <li><i class="fas fa-user-check"></i> Авторство и происхождение</li>
+                                <li><i class="fas fa-image"></i> Анализ изображений на подлинность</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 7,
+                        title: "Инструменты для начинающих",
+                        duration: "35 мин",
+                        content: `
+                            <h4>Базовый набор инструментов:</h4>
+                            <ul>
+                                <li><i class="fas fa-search"></i> Google Advanced Search</li>
+                                <li><i class="fas fa-history"></i> Wayback Machine</li>
+                                <li><i class="fas fa-users"></i> Social Searcher</li>
+                                <li><i class="fas fa-envelope"></i> Hunter.io</li>
+                                <li><i class="fas fa-map"></i> Google Earth</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 8,
+                        title: "Практическое задание #1",
+                        duration: "45 мин",
+                        content: `
+                            <h4>Задание:</h4>
+                            <p>Проведите небольшое исследование:</p>
+                            <ol style="list-style: none;">
+                                <li style="margin-bottom: 10px;">1. Найдите информацию о себе в открытых источниках</li>
+                                <li style="margin-bottom: 10px;">2. Проверьте свой email на утечки (haveibeenpwned.com)</li>
+                                <li style="margin-bottom: 10px;">3. Найдите свои старые профили в соцсетях</li>
+                                <li style="margin-bottom: 10px;">4. Составьте отчет о найденной информации</li>
+                            </ol>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Google Dorks и поиск",
+                description: "Освойте продвинутые операторы поиска Google и специальные поисковые системы.",
+                lessons: 8,
+                duration: "3.5 часа",
+                icon: "fas fa-search",
+                lessonsList: [
+                    {
+                        id: 1,
+                        title: "Базовые операторы Google",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Основные операторы Google:</h4>
+                            <ul>
+                                <li><strong>site:</strong> - поиск по конкретному сайту</li>
+                                <li><strong>filetype:</strong> - поиск по типу файлов</li>
+                                <li><strong>intitle:</strong> - поиск в заголовке</li>
+                                <li><strong>inurl:</strong> - поиск в URL</li>
+                                <li><strong>intext:</strong> - поиск в тексте</li>
+                            </ul>
+                            <div class="code-block">
+                                site:example.com секретные документы<br>
+                                filetype:pdf конфиденциально<br>
+                                intitle:"индекс of" /etc
+                            </div>
+                        `
+                    },
+                    {
+                        id: 2,
+                        title: "Продвинутые Google Dorks",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Комбинированные запросы:</h4>
+                            <div class="code-block">
+                                site:*.gov filetype:pdf секретно<br>
+                                intitle:"webcam" inurl:view/view.shtml<br>
+                                inurl:wp-content/uploads intext:wp-config<br>
+                                site:pastebin.com "username" "password"<br>
+                                intitle:"index of" "database.sql"
+                            </div>
+                        `
+                    },
+                    {
+                        id: 3,
+                        title: "Поиск файлов и документов",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Поиск различных типов файлов:</h4>
+                            <ul>
+                                <li><strong>filetype:pdf</strong> - поиск PDF документов</li>
+                                <li><strong>filetype:doc</strong> - поиск Word документов</li>
+                                <li><strong>filetype:xls</strong> - поиск Excel таблиц</li>
+                                <li><strong>filetype:ppt</strong> - поиск презентаций</li>
+                                <li><strong>filetype:txt</strong> - поиск текстовых файлов</li>
+                            </ul>
+                            <div class="code-block">
+                                site:example.com filetype:pdf отчет<br>
+                                intitle:"конфиденциально" filetype:doc
+                            </div>
+                        `
+                    },
+                    {
+                        id: 4,
+                        title: "Поиск по заголовкам и URL",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Операторы для заголовков и URL:</h4>
+                            <ul>
+                                <li><strong>intitle:"индекс of"</strong> - поиск открытых директорий</li>
+                                <li><strong>inurl:admin</strong> - поиск административных панелей</li>
+                                <li><strong>allintitle:</strong> - все слова в заголовке</li>
+                                <li><strong>allinurl:</strong> - все слова в URL</li>
+                            </ul>
+                            <div class="code-block">
+                                intitle:"index of" /backup<br>
+                                inurl:wp-admin
+                            </div>
+                        `
+                    },
+                    {
+                        id: 5,
+                        title: "Поиск по датам и диапазонам",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Фильтрация по времени:</h4>
+                            <ul>
+                                <li><strong>after:2020-01-01</strong> - после указанной даты</li>
+                                <li><strong>before:2019-12-31</strong> - до указанной даты</li>
+                                <li><strong>daterange:</strong> - диапазон дат</li>
+                            </ul>
+                            <div class="code-block">
+                                after:2020-01-01 filetype:pdf отчет<br>
+                                before:2019-12-31 site:example.com
+                            </div>
+                        `
+                    },
+                    {
+                        id: 6,
+                        title: "Специализированные поисковики",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Альтернативные поисковые системы:</h4>
+                            <ul>
+                                <li><strong>Shodan</strong> - поиск устройств</li>
+                                <li><strong>Censys</strong> - поиск сертификатов и устройств</li>
+                                <li><strong>ZoomEye</strong> - поиск сетевых устройств</li>
+                                <li><strong>Wayback Machine</strong> - архив веб-страниц</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 7,
+                        title: "Практика: поиск уязвимостей",
+                        duration: "35 мин",
+                        content: `
+                            <h4>Практическое задание:</h4>
+                            <p>Найдите с помощью Google Dorks:</p>
+                            <ul>
+                                <li>Открытые FTP серверы</li>
+                                <li>Конфигурационные файлы</li>
+                                <li>Панели администрирования</li>
+                                <li>Резервные копии баз данных</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 8,
+                        title: "Автоматизация поиска",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Инструменты для автоматизации:</h4>
+                            <ul>
+                                <li><strong>GooFuzz</strong> - фаззинг через Google Dorks</li>
+                                <li><strong>Pagodo</strong> - автоматический поиск</li>
+                                <li><strong>DorkScann3r</strong> - сканер Google Dorks</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Поиск по username",
+                description: "Научитесь находить все профили человека по одному нику в соцсетях.",
+                lessons: 8,
+                duration: "3.5 часа",
+                icon: "fas fa-user-tag",
+                lessonsList: [
+                    {
+                        id: 1,
+                        title: "Инструменты поиска по никам",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Популярные инструменты:</h4>
+                            <ul>
+                                <li><strong>Sherlock</strong> - поиск по 300+ сайтам</li>
+                                <li><strong>WhatsMyName</strong> - база профилей</li>
+                                <li><strong>Namechk</strong> - проверка доступности ников</li>
+                                <li><strong>UserSearch</strong> - агрегатор поиска</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 2,
+                        title: "Поиск в социальных сетях",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Поиск по платформам:</h4>
+                            <ul>
+                                <li>VK: vk.com/username</li>
+                                <li>Instagram: instagram.com/username</li>
+                                <li>Twitter: twitter.com/username</li>
+                                <li>Telegram: t.me/username</li>
+                                <li>GitHub: github.com/username</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 3,
+                        title: "Поиск на форумах и в сообществах",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Форумы и сообщества:</h4>
+                            <ul>
+                                <li>Reddit: reddit.com/user/username</li>
+                                <li>Pikabu: pikabu.ru/@username</li>
+                                <li>Habr: habr.com/users/username</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 4,
+                        title: "Поиск на игровых платформах",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Игровые сервисы:</h4>
+                            <ul>
+                                <li>Steam: steamcommunity.com/id/username</li>
+                                <li>Twitch: twitch.tv/username</li>
+                                <li>Discord: поиск через Discord ID</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 5,
+                        title: "Поиск по email",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Связь username и email:</h4>
+                            <ul>
+                                <li>Проверка утечек через haveibeenpwned</li>
+                                <li>Поиск профилей по email через Hunter.io</li>
+                                <li>Использование Dehashed для поиска</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 6,
+                        title: "Анализ найденных профилей",
+                        duration: "30 мин",
+                        content: `
+                            <h4>Что искать в профилях:</h4>
+                            <ul>
+                                <li>Аватар и фото</li>
+                                <li>Био и описание</li>
+                                <li>Ссылки на другие соцсети</li>
+                                <li>Даты регистрации и активность</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 7,
+                        title: "Поиск по фото профиля",
+                        duration: "25 мин",
+                        content: `
+                            <h4>Обратный поиск изображений:</h4>
+                            <ul>
+                                <li>Google Images</li>
+                                <li>Yandex Images</li>
+                                <li>TinEye</li>
+                                <li>FaceCheck</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 8,
+                        title: "Практикум: полный поиск по нику",
+                        duration: "45 мин",
+                        content: `
+                            <h4>Задание:</h4>
+                            <p>Возьмите любой публичный ник и найдите:</p>
+                            <ul>
+                                <li>Минимум 5 разных профилей</li>
+                                <li>Связанные email адреса</li>
+                                <li>Общие фото и аватары</li>
+                                <li>Связи между аккаунтами</li>
+                            </ul>
+                        `
+                    }
+                ]
+            }
+        ];
+
+        // Данные ресурсов - РАСШИРЕННАЯ ВЕРСИЯ
+        const resources = [
+            { 
+                name: "OSINT Framework", 
+                description: "Полная коллекция инструментов OSINT", 
+                category: "Фреймворк", 
+                rating: 4.9,
+                fullDescription: "OSINT Framework - это веб-сайт, который представляет собой структурированную коллекцию инструментов и ресурсов для сбора информации из открытых источников. Он организован по категориям, что упрощает поиск нужных инструментов.",
+                website: "https://osintframework.com",
+                tools: ["Поиск людей", "Социальные сети", "Email", "Домены", "IP-адреса"],
+                useCases: ["Разведка", "Расследования", "Кибербезопасность"]
+            },
+            { 
+                name: "Shodan", 
+                description: "Поисковая система для интернет-устройств", 
+                category: "Поиск", 
+                rating: 4.8,
+                fullDescription: "Shodan - это поисковая система для поиска подключенных к интернету устройств. Она позволяет находить серверы, веб-камеры, маршрутизаторы и другие устройства, которые подключены к сети.",
+                website: "https://shodan.io",
+                tools: ["Поиск устройств", "Мониторинг", "API"],
+                useCases: ["Аудит безопасности", "Поиск уязвимостей", "Мониторинг сети"]
+            },
+            { 
+                name: "Maltego", 
+                description: "Визуализация связей и анализ данных", 
+                category: "Инструмент", 
+                rating: 4.7,
+                fullDescription: "Maltego - это программное обеспечение для визуализации и анализа связей. Оно позволяет собирать информацию из различных источников и отображать связи между объектами в виде графов.",
+                website: "https://maltego.com",
+                tools: ["Трансформы", "Графы", "Интеграции"],
+                useCases: ["Расследования", "Анализ связей", "Кибербезопасность"]
+            },
+            { 
+                name: "Hunter.io", 
+                description: "Поиск email адресов по домену", 
+                category: "Email", 
+                rating: 4.6,
+                fullDescription: "Hunter.io - это инструмент для поиска email-адресов, связанных с определенным доменом. Он также позволяет проверять валидность найденных адресов и проводить email-верификацию.",
+                website: "https://hunter.io",
+                tools: ["Поиск email", "Верификация", "Email Finder"],
+                useCases: ["Маркетинг", "Поиск контактов", "Расследования"]
+            },
+            { 
+                name: "PhoneInfoga", 
+                description: "Разведка по номерам телефонов", 
+                category: "Телефон", 
+                rating: 4.5,
+                fullDescription: "PhoneInfoga - это инструмент для сбора информации по номерам телефонов. Он позволяет определять страну, оператора, регион и другую информацию, связанную с номером.",
+                website: "https://phoneinfoga.cryptonstudio.org",
+                tools: ["Поиск по номеру", "Определение оператора", "Валидация"],
+                useCases: ["Разведка", "Проверка номеров", "Расследования"]
+            },
+            { 
+                name: "Sherlock", 
+                description: "Поиск по username в соцсетях", 
+                category: "Соцсети", 
+                rating: 4.8,
+                fullDescription: "Sherlock - это инструмент командной строки для поиска username по множеству социальных сетей и платформ. Он проверяет, зарегистрирован ли указанный ник на различных сайтах.",
+                website: "https://github.com/sherlock-project/sherlock",
+                tools: ["Поиск по никам", "Мониторинг", "Отчеты"],
+                useCases: ["Поиск профилей", "Разведка", "Мониторинг"]
+            },
+            { 
+                name: "Google Earth", 
+                description: "Спутниковые снимки и 3D-карты", 
+                category: "Геолокация", 
+                rating: 4.9,
+                fullDescription: "Google Earth - это виртуальный глобус, который позволяет просматривать спутниковые снимки, карты, рельеф местности и 3D-здания. Это мощный инструмент для геолокации и анализа местности.",
+                website: "https://earth.google.com",
+                tools: ["Спутниковые снимки", "3D-карты", "Измерения"],
+                useCases: ["Геолокация", "Анализ местности", "Планирование"]
+            },
+            { 
+                name: "Have I Been Pwned", 
+                description: "Проверка утечек паролей и email", 
+                category: "Безопасность", 
+                rating: 4.7,
+                fullDescription: "Have I Been Pwned - это сервис, который позволяет проверить, не попал ли ваш email или пароль в утечки данных. Он собирает информацию о взломанных базах данных и утечках.",
+                website: "https://haveibeenpwned.com",
+                tools: ["Проверка email", "Проверка паролей", "Уведомления"],
+                useCases: ["Безопасность", "Мониторинг утечек", "Защита данных"]
+            }
+        ];
+
+        // Данные терминов - РАСШИРЕННАЯ ВЕРСИЯ
+        const terms = [
+            { term: "OSINT", definition: "Open Source Intelligence - сбор информации из открытых источников" },
+            { term: "SOCMINT", definition: "Social Media Intelligence - разведка в социальных сетях" },
+            { term: "GEOINT", definition: "Geospatial Intelligence - геопространственная разведка" },
+            { term: "HUMINT", definition: "Human Intelligence - разведка через человеческие источники" },
+            { term: "Доксинг", definition: "Сбор и публикация персональной информации" },
+            { term: "Метаданные", definition: "Данные о данных (EXIF, геотеги и т.д.)" },
+            { term: "Google Dorks", definition: "Специальные операторы поиска Google" },
+            { term: "Анонимизация", definition: "Процесс скрытия личности" },
+            { term: "Верификация", definition: "Проверка достоверности информации" },
+            { term: "Цифровой след", definition: "Совокупность цифровой информации о человеке" },
+            { term: "Сниффинг", definition: "Перехват сетевого трафика" },
+            { term: "Фишинг", definition: "Кража данных через поддельные страницы" },
+            { term: "Сватинг", definition: "Ложный вызов спецслужб по адресу жертвы" },
+            { term: "Maltego", definition: "Инструмент для визуализации связей" },
+            { term: "Shodan", definition: "Поисковая система для интернет-устройств" },
+            { term: "Tor", definition: "Сеть для анонимного интернета" },
+            { term: "VPN", definition: "Виртуальная частная сеть" },
+            { term: "WHOIS", definition: "Протокол для получения данных о доменах" },
+            { term: "DNS", definition: "Система доменных имен" },
+            { term: "EXIF", definition: "Метаданные изображений" }
+        ];
+
+        // Данные заданий - РАСШИРЕННАЯ ВЕРСИЯ
+        const challenges = [
+            {
+                id: 1,
+                title: "Найди человека по нику",
+                description: "Используя только никнейм 'john_doe', найдите все его профили в социальных сетях и составьте досье.",
+                difficulty: "Начинающий",
+                points: 100,
+                time: "30 мин",
+                icon: "fas fa-user-secret",
+                steps: [
+                    {
+                        title: "Поиск по основным соцсетям",
+                        description: "Найдите профили пользователя с ником 'john_doe' в VK, Instagram и Telegram. Введите найденные ссылки через запятую.",
+                        expectedAnswer: "vk.com/john_doe, instagram.com/john_doe, t.me/john_doe"
+                    },
+                    {
+                        title: "Поиск на форумах",
+                        description: "Проверьте наличие профиля на Reddit и Habr. Введите найденные ссылки.",
+                        expectedAnswer: "reddit.com/user/john_doe, habr.com/users/john_doe"
+                    },
+                    {
+                        title: "Анализ аватарок",
+                        description: "Найдите общую аватарку в найденных профилях. Опишите, что на ней изображено.",
+                        expectedAnswer: "синий фон, белая птица"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Расследование по email",
+                description: "По email адресу определите все связанные аккаунты, утечки данных и возможную личную информацию.",
+                difficulty: "Средний",
+                points: 150,
+                time: "45 мин",
+                icon: "fas fa-envelope-open-text",
+                steps: [
+                    {
+                        title: "Проверка утечек",
+                        description: "Используя сервис haveibeenpwned.com, проверьте email 'test@example.com' на утечки. Сколько утечек найдено?",
+                        expectedAnswer: "3"
+                    },
+                    {
+                        title: "Поиск связанных аккаунтов",
+                        description: "Найдите аккаунты, связанные с этим email, через сервис hunter.io. Какие сервисы использует пользователь?",
+                        expectedAnswer: "github, twitter"
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Поиск по фотографии",
+                description: "Найдите все места и источники, где публиковалась данная фотография. Определите геолокацию.",
+                difficulty: "Средний",
+                points: 200,
+                time: "60 мин",
+                icon: "fas fa-camera-retro",
+                steps: [
+                    {
+                        title: "Обратный поиск",
+                        description: "Загрузите фото в Google Images. На каком сайте оно впервые появилось?",
+                        expectedAnswer: "flickr.com"
+                    },
+                    {
+                        title: "Геолокация",
+                        description: "Определите место съемки по геотегам или характерным приметам. Назовите город.",
+                        expectedAnswer: "Париж"
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Анализ домена",
+                description: "Проведите полный анализ домена example.com: история, поддомены, владельцы, связанные ресурсы.",
+                difficulty: "Продвинутый",
+                points: 250,
+                time: "90 мин",
+                icon: "fas fa-globe",
+                steps: [
+                    {
+                        title: "WHOIS данные",
+                        description: "Найдите информацию о владельце домена через whois-сервис. Кто зарегистрировал домен?",
+                        expectedAnswer: "Example Inc."
+                    },
+                    {
+                        title: "История изменений",
+                        description: "Используя Wayback Machine, найдите самую старую сохраненную версию сайта. Какой год?",
+                        expectedAnswer: "1998"
+                    },
+                    {
+                        title: "Поддомены",
+                        description: "Найдите все поддомены через сервис SecurityTrails. Сколько их найдено?",
+                        expectedAnswer: "5"
+                    }
+                ]
+            }
+        ];
+
+        // ==================== СИСТЕМА МОНИТОРИНГА ====================
+        let visitors = [];
+        let logs = [];
+        let currentVisitorId = null;
+        let sessionStartTime = Date.now();
+        let currentIP = '127.0.0.1';
+        let failedAttempts = 0;
+        let lastAttemptTime = 0;
+        const ADMIN_PASSWORD_HASH = hashPassword('KilledBeta908090');
+
+        // Хеширование пароля
+        function hashPassword(password) {
+            let hash = 0;
+            for (let i = 0; i < password.length; i++) {
+                const char = password.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return hash.toString(16);
+        }
+
+        // Функция для получения реального IP
+        async function getRealIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                currentIP = data.ip;
+                return data.ip;
+            } catch (error) {
+                currentIP = '127.0.0.' + Math.floor(Math.random() * 255);
+                return currentIP;
+            }
+        }
+
+        // Функция для получения геоданных по IP
+        async function getGeoData(ip) {
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return {
+                        country: data.country_name || 'Unknown',
+                        city: data.city || 'Unknown',
+                        provider: data.org || 'Unknown'
+                    };
+                }
+            } catch (error) {
+                console.log('Ошибка получения геоданных');
+            }
+            return { country: 'Unknown', city: 'Unknown', provider: 'Unknown' };
+        }
+
+        // Функция для определения браузера и ОС
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browser = "Unknown", os = "Unknown";
+
+            if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+            else if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+            else if (ua.indexOf("Safari") > -1) browser = "Safari";
+            else if (ua.indexOf("Edge") > -1) browser = "Edge";
+
+            if (ua.indexOf("Windows") > -1) os = "Windows";
+            else if (ua.indexOf("Mac") > -1) os = "macOS";
+            else if (ua.indexOf("Linux") > -1) os = "Linux";
+            else if (ua.indexOf("Android") > -1) os = "Android";
+            else if (ua.indexOf("iOS") > -1) os = "iOS";
+
+            return { browser, os };
+        }
+
+        // Регистрация посетителя через API
+        async function registerVisitor() {
+            const ip = await getRealIP();
+            const geo = await getGeoData(ip);
+            const browserInfo = getBrowserInfo();
+            
+            const params = new URLSearchParams({
+                action: 'register',
+                ip: ip,
+                country: geo.country,
+                city: geo.city,
+                provider: geo.provider,
+                browser: browserInfo.browser,
+                os: browserInfo.os,
+                screen: `${screen.width}x${screen.height}`
+            });
+            
+            await fetch(`${API_URL}?${params}`);
+        }
+
+        // Получение всех посетителей
+        async function getAllVisitors() {
+            const response = await fetch(`${API_URL}?action=get_visitors`);
+            return await response.json();
+        }
+
+        // Получение логов
+        async function getLogs() {
+            const response = await fetch(`${API_URL}?action=get_logs&limit=100`);
+            return await response.json();
+        }
+
+        // Получение статистики
+        async function getStats() {
+            const response = await fetch(`${API_URL}?action=get_stats`);
+            return await response.json();
+        }
+
+        // Обновление активности
+        async function updateVisitorActivity(page) {
+            const params = new URLSearchParams({
+                action: 'update_activity',
+                ip: currentIP,
+                page: page
+            });
+            await fetch(`${API_URL}?${params}`);
+        }
+
+        // Добавление лога
+        async function addLog(action, ip, details = '') {
+            const params = new URLSearchParams({
+                action: 'add_log',
+                ip: ip || currentIP,
+                action_text: action,
+                details: details
+            });
+            await fetch(`${API_URL}?${params}`);
+        }
+
+        // Обновление админ панели
+        async function updateAdminPanel() {
+            const visitors = await getAllVisitors();
+            const stats = await getStats();
+            const logs = await getLogs();
+            const now = Date.now();
+            
+            document.getElementById('activeVisitorsCount').textContent = stats.active_visitors || 0;
+            document.getElementById('totalVisitorsCount').textContent = stats.total_visitors || 0;
+            document.getElementById('totalLessonsCompleted').textContent = stats.total_lessons || 0;
+            document.getElementById('totalChallengesCompleted').textContent = stats.total_challenges || 0;
+            
+            // Активные посетители (последние 5 минут)
+            const activeVisitors = visitors.filter(v => 
+                (now - new Date(v.last_active).getTime()) < 300000
+            );
+            
+            const activeBody = document.getElementById('activeVisitorsBody');
+            activeBody.innerHTML = '';
+            activeVisitors.forEach(v => {
+                const timeOnSite = Math.round((now - new Date(v.first_visit).getTime()) / 60000);
+                activeBody.innerHTML += `
+                    <tr>
+                        <td>${v.ip}</td>
+                        <td>${v.country}</td>
+                        <td>${v.city}</td>
+                        <td>${v.provider}</td>
+                        <td>${v.browser} / ${v.os}</td>
+                        <td>${v.current_page || 'Главная'}</td>
+                        <td>${timeOnSite} мин</td>
+                        <td><span class="admin-status status-online"></span> Онлайн</td>
+                    </tr>
+                `;
+            });
+            
+            const allBody = document.getElementById('allVisitorsBody');
+            allBody.innerHTML = '';
+            visitors.slice(0, 50).forEach(v => {
+                const isOnline = (now - new Date(v.last_active).getTime()) < 120000;
+                allBody.innerHTML += `
+                    <tr>
+                        <td>${v.ip}</td>
+                        <td>${v.country}</td>
+                        <td>${v.city}</td>
+                        <td>${v.provider}</td>
+                        <td>${v.browser}</td>
+                        <td>${v.os}</td>
+                        <td>${new Date(v.first_visit).toLocaleString()}</td>
+                        <td>${new Date(v.last_visit).toLocaleString()}</td>
+                        <td>${v.visit_count}</td>
+                        <td><span class="admin-status ${isOnline ? 'status-online' : 'status-offline'}"></span> ${isOnline ? 'Онлайн' : 'Офлайн'}</td>
+                    </tr>
+                `;
+            });
+            
+            const logsContainer = document.getElementById('logsContainer');
+            logsContainer.innerHTML = '';
+            logs.slice(0, 50).forEach(log => {
+                logsContainer.innerHTML += `
+                    <div class="admin-log-entry">
+                        <span class="admin-log-time">${new Date(log.timestamp).toLocaleString()}</span>
+                        <span class="admin-log-ip">${log.ip}</span>
+                        <span class="admin-log-action">${log.action}</span>
+                        ${log.details ? `<span class="admin-badge">${log.details}</span>` : ''}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('avgTime').textContent = (stats.avg_time || 0) + ' мин';
+            
+            if (visitors.length > 0) {
+                const ipCounts = {};
+                visitors.forEach(v => ipCounts[v.ip] = (ipCounts[v.ip] || 0) + v.visit_count);
+                const mostActiveIP = Object.entries(ipCounts).sort((a, b) => b[1] - a[1])[0];
+                document.getElementById('mostActiveIP').textContent = mostActiveIP ? mostActiveIP[0] : '-';
+            }
+            
+            document.getElementById('totalActions').textContent = logs.length;
+        }
+
+        // Загрузка категорий
+        function loadCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            grid.innerHTML = '';
+            
+            categories.forEach(category => {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.onclick = () => openCategoryModal(category);
+                card.innerHTML = `
+                    <div class="category-icon"><i class="${category.icon}"></i></div>
+                    <h3 class="category-title">${category.name}</h3>
+                    <p class="category-count">${category.count} инструментов</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Загрузка модулей
+        function loadModules() {
+            const grid = document.getElementById('modulesGrid');
+            grid.innerHTML = '';
+            
+            modules.forEach(module => {
+                const savedProgress = JSON.parse(localStorage.getItem(`module_${module.id}_progress`)) || [];
+                const completedCount = savedProgress.length;
+                const progressPercent = (completedCount / module.lessons) * 100;
+                
+                const card = document.createElement('div');
+                card.className = 'training-card';
+                card.onclick = () => openModule(module.id);
+                card.innerHTML = `
+                    <span class="training-badge">Модуль ${module.id}</span>
+                    <h3 class="training-title">${module.title}</h3>
+                    <p class="training-description">${module.description}</p>
+                    <div class="training-meta">
+                        <span><i class="fas fa-book"></i> ${completedCount}/${module.lessons} уроков</span>
+                        <span><i class="fas fa-clock"></i> ${module.duration}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                    </div>
+                    <div class="training-footer">
+                        <span class="training-score">${completedCount * 10} очков</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Загрузка заданий
+        function loadChallenges() {
+            const grid = document.getElementById('challengesGrid');
+            grid.innerHTML = '';
+            
+            challenges.forEach(challenge => {
+                const isCompleted = false;
+                
+                const card = document.createElement('div');
+                card.className = 'challenge-card';
+                card.innerHTML = `
+                    <div class="challenge-icon"><i class="${challenge.icon}"></i></div>
+                    <span class="challenge-reward">${challenge.points} XP</span>
+                    <h3 class="challenge-title">${challenge.title}</h3>
+                    <p class="challenge-description">${challenge.description}</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-signal"></i> ${challenge.difficulty}</span>
+                        <span><i class="fas fa-clock"></i> ${challenge.time}</span>
+                    </div>
+                    <button class="challenge-btn" onclick="openChallenge(${challenge.id})">
+                        <i class="fas fa-play"></i> Пройти задание
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Загрузка ресурсов
+        function loadResources() {
+            const grid = document.getElementById('resourcesGrid');
+            grid.innerHTML = '';
+            
+            resources.forEach(resource => {
+                const card = document.createElement('div');
+                card.className = 'resource-card';
+                card.onclick = () => openResourceModal(resource);
+                card.innerHTML = `
+                    <div class="resource-name">${resource.name}</div>
+                    <div class="resource-description">${resource.description}</div>
+                    <div class="resource-meta">
+                        <span><i class="fas fa-folder"></i> ${resource.category}</span>
+                        <span><i class="fas fa-star"></i> ${resource.rating}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Загрузка терминов
+        function loadTerms() {
+            const grid = document.getElementById('termsGrid');
+            grid.innerHTML = '';
+            
+            terms.forEach(term => {
+                const card = document.createElement('div');
+                card.className = 'term-card';
+                card.innerHTML = `
+                    <div class="term-title">${term.term}</div>
+                    <div class="term-definition">${term.definition}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Открыть модальное окно с информацией о категории
+        function openCategoryModal(category) {
+            const modal = document.getElementById('infoModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.innerHTML = `
+                <h2 class="modal-title">${category.name}</h2>
+                <p class="modal-description">${category.details}</p>
+                <div class="modal-info">
+                    <div class="modal-info-item">
+                        <i class="fas fa-tools"></i>
+                        <span>Инструменты: ${category.tools.join(', ')}</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Применение: ${category.useCases.join(', ')}</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Доступно инструментов: ${category.count}</span>
+                    </div>
+                </div>
+                <button class="modal-link" onclick="scrollToSection('training')">
+                    <i class="fas fa-graduation-cap"></i> Перейти к обучению
+                </button>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // Открыть модальное окно с информацией о ресурсе
+        function openResourceModal(resource) {
+            const modal = document.getElementById('infoModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.innerHTML = `
+                <h2 class="modal-title">${resource.name}</h2>
+                <p class="modal-description">${resource.fullDescription}</p>
+                <div class="modal-info">
+                    <div class="modal-info-item">
+                        <i class="fas fa-folder"></i>
+                        <span>Категория: ${resource.category}</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <i class="fas fa-star"></i>
+                        <span>Рейтинг: ${resource.rating}/5</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <i class="fas fa-tools"></i>
+                        <span>Инструменты: ${resource.tools.join(', ')}</span>
+                    </div>
+                    <div class="modal-info-item">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Применение: ${resource.useCases.join(', ')}</span>
+                    </div>
+                </div>
+                <a href="${resource.website}" target="_blank" class="modal-link">
+                    <i class="fas fa-external-link-alt"></i> Перейти на сайт
+                </a>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // Открыть задание
+        function openChallenge(challengeId) {
+            const challenge = challenges.find(c => c.id === challengeId);
+            if (!challenge) return;
+            
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('modulePages').innerHTML = '';
+            
+            const challengePages = document.getElementById('challengePages');
+            challengePages.innerHTML = '';
+            
+            const page = document.createElement('div');
+            page.className = 'challenge-page active';
+            page.id = `challenge${challengeId}Page`;
+            
+            let stepsHtml = '';
+            challenge.steps.forEach((step, index) => {
+                stepsHtml += `
+                    <div class="challenge-step" id="step-${challengeId}-${index}">
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-content">
+                            <h3 class="step-title">${step.title}</h3>
+                            <p class="step-description">${step.description}</p>
+                            <input type="text" class="step-input" id="input-${challengeId}-${index}" placeholder="Введите ответ...">
+                            <button class="step-check-btn" onclick="checkStep(${challengeId}, ${index})">
+                                Проверить
+                            </button>
+                            <div class="step-status" id="status-${challengeId}-${index}"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            page.innerHTML = `
+                <div class="container">
+                    <div class="challenge-header">
+                        <a class="challenge-back" onclick="showMainPage()">
+                            <i class="fas fa-arrow-left"></i> Назад к заданиям
+                        </a>
+                        <h1 class="challenge-detail-title">${challenge.title}</h1>
+                        <div class="challenge-detail-meta">
+                            <span class="challenge-detail-meta-item"><i class="fas fa-signal"></i> ${challenge.difficulty}</span>
+                            <span class="challenge-detail-meta-item"><i class="fas fa-clock"></i> ${challenge.time}</span>
+                            <span class="challenge-detail-meta-item"><i class="fas fa-star"></i> ${challenge.points} XP</span>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-steps">
+                        ${stepsHtml}
+                    </div>
+                    
+                    <div class="challenge-complete" id="complete-${challengeId}">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Задание выполнено!</h3>
+                        <p>Вы получили ${challenge.points} XP</p>
+                    </div>
+                </div>
+            `;
+            
+            challengePages.appendChild(page);
+        }
+
+        // Проверка шага задания
+        function checkStep(challengeId, stepIndex) {
+            const challenge = challenges.find(c => c.id === challengeId);
+            if (!challenge) return;
+            
+            const input = document.getElementById(`input-${challengeId}-${stepIndex}`);
+            const status = document.getElementById(`status-${challengeId}-${stepIndex}`);
+            const step = challenge.steps[stepIndex];
+            
+            const userAnswer = input.value.trim().toLowerCase();
+            const expectedAnswer = step.expectedAnswer.toLowerCase();
+            
+            if (userAnswer === expectedAnswer) {
+                status.className = 'step-status success';
+                status.innerHTML = '<i class="fas fa-check"></i> Правильно!';
+                
+                input.disabled = true;
+                const button = document.querySelector(`#step-${challengeId}-${stepIndex} .step-check-btn`);
+                button.disabled = true;
+                
+                const allStepsCompleted = challenge.steps.every((_, index) => {
+                    const stepStatus = document.getElementById(`status-${challengeId}-${index}`);
+                    return stepStatus && stepStatus.classList.contains('success');
+                });
+                
+                if (allStepsCompleted) {
+                    document.getElementById(`complete-${challengeId}`).classList.add('show');
+                }
+            } else {
+                status.className = 'step-status error';
+                status.innerHTML = '<i class="fas fa-times"></i> Неправильно. Попробуйте снова.';
+            }
+        }
+
+        // Закрыть модальное окно
+        function closeModal() {
+            document.getElementById('infoModal').classList.remove('active');
+        }
+
+        // Открыть модуль
+        function openModule(moduleId) {
+            const module = modules.find(m => m.id === moduleId);
+            if (!module) return;
+            
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('challengePages').innerHTML = '';
+            
+            const modulePages = document.getElementById('modulePages');
+            modulePages.innerHTML = '';
+            
+            const modulePage = document.createElement('div');
+            modulePage.className = 'module-page active';
+            modulePage.id = `module${moduleId}Page`;
+            
+            const savedProgress = JSON.parse(localStorage.getItem(`module_${moduleId}_progress`)) || [];
+            
+            let lessonsHtml = '';
+            module.lessonsList.forEach((lesson, index) => {
+                const isCompleted = savedProgress.includes(lesson.id);
+                lessonsHtml += `
+                    <div class="lesson-card" id="lesson-${moduleId}-${lesson.id}">
+                        <div class="lesson-header" onclick="toggleLessonContent(this)">
+                            <div class="lesson-check ${isCompleted ? 'completed' : ''}" onclick="event.stopPropagation(); toggleLessonComplete(${moduleId}, ${lesson.id})">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h3 class="lesson-title">${index + 1}. ${lesson.title}</h3>
+                            <span class="lesson-duration">${lesson.duration}</span>
+                        </div>
+                        <div class="lesson-expand" onclick="toggleLessonContent(this)">
+                            <i class="fas fa-chevron-down"></i> Показать материал
+                        </div>
+                        <div class="lesson-content">
+                            ${lesson.content}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            modulePage.innerHTML = `
+                <div class="container">
+                    <div class="module-header">
+                        <a class="module-back" onclick="showMainPage()">
+                            <i class="fas fa-arrow-left"></i> Назад к модулям
+                        </a>
+                        <h1 class="module-title">Модуль ${moduleId}: ${module.title}</h1>
+                        <div class="module-progress">
+                            <div class="module-progress-bar">
+                                <div class="module-progress-fill" id="module${moduleId}ProgressFill" style="width: ${(savedProgress.length / module.lessons) * 100}%"></div>
+                            </div>
+                            <span class="module-progress-text" id="module${moduleId}ProgressText">${savedProgress.length}/${module.lessons} уроков</span>
+                        </div>
+                    </div>
+                    <div class="lessons-grid">
+                        ${lessonsHtml}
+                    </div>
+                </div>
+            `;
+            
+            modulePages.appendChild(modulePage);
+        }
+
+        // Показать главную страницу
+        function showMainPage() {
+            document.getElementById('mainPage').style.display = 'block';
+            document.getElementById('modulePages').innerHTML = '';
+            document.getElementById('challengePages').innerHTML = '';
+            loadModules();
+            loadChallenges();
+        }
+
+        // Отметить урок как пройденный
+        function toggleLessonComplete(moduleId, lessonId) {
+            const progressKey = `module_${moduleId}_progress`;
+            let savedProgress = JSON.parse(localStorage.getItem(progressKey)) || [];
+            
+            const lessonCheck = document.querySelector(`#lesson-${moduleId}-${lessonId} .lesson-check`);
+            
+            if (savedProgress.includes(lessonId)) {
+                savedProgress = savedProgress.filter(id => id !== lessonId);
+                lessonCheck.classList.remove('completed');
+            } else {
+                savedProgress.push(lessonId);
+                lessonCheck.classList.add('completed');
+                
+                // Отправляем на сервер
+                const params = new URLSearchParams({
+                    action: 'update_lesson',
+                    ip: currentIP,
+                    lesson_id: lessonId
+                });
+                fetch(`${API_URL}?${params}`);
+            }
+            
+            localStorage.setItem(progressKey, JSON.stringify(savedProgress));
+            
+            const module = modules.find(m => m.id === moduleId);
+            const progressFill = document.getElementById(`module${moduleId}ProgressFill`);
+            const progressText = document.getElementById(`module${moduleId}ProgressText`);
+            
+            if (progressFill && progressText) {
+                const percent = (savedProgress.length / module.lessons) * 100;
+                progressFill.style.width = percent + '%';
+                progressText.textContent = `${savedProgress.length}/${module.lessons} уроков`;
+            }
+            
+            loadModules();
+        }
+
+        // Показать/скрыть содержимое урока
+        function toggleLessonContent(element) {
+            const lessonCard = element.closest('.lesson-card');
+            lessonCard.classList.toggle('expanded');
+            
+            const expandBtn = lessonCard.querySelector('.lesson-expand');
+            if (lessonCard.classList.contains('expanded')) {
+                expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Скрыть материал';
+            } else {
+                expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Показать материал';
+            }
+        }
+
+        // Прокрутка к секции
+        function scrollToSection(sectionId) {
+            showMainPage();
+            setTimeout(() => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        // Закрытие модального окна по клику вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Админ функции
+        function showAdminLogin() {
+            document.getElementById('adminLogin').style.display = 'block';
+        }
+
+        async function adminLogin() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('adminLoginError');
+            
+            const now = Date.now();
+            if (now - lastAttemptTime < 5000 && failedAttempts >= 5) {
+                errorDiv.textContent = 'Слишком много попыток. Подождите 5 секунд.';
+                return;
+            }
+            
+            const passwordHash = hashPassword(password);
+            
+            if (username === 'Разработчик' && passwordHash === ADMIN_PASSWORD_HASH) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').classList.add('active');
+                failedAttempts = 0;
+                await addLog('admin_login', currentIP, 'Успешный вход');
+                await updateAdminPanel();
+                setInterval(updateAdminPanel, 5000);
+            } else {
+                failedAttempts++;
+                lastAttemptTime = now;
+                errorDiv.textContent = `Неверный логин или пароль. Осталось попыток: ${5 - failedAttempts}`;
+                await addLog('admin_login_failed', currentIP, 'Неудачная попытка входа');
+            }
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').classList.remove('active');
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+        }
+
+        async function clearAllData() {
+            if (confirm('Вы уверены? Это удалит все данные о посетителях и логах!')) {
+                await fetch(`${API_URL}?action=clear_data&admin_key=KilledBeta908090`);
+                await addLog('admin_clear_data', currentIP, 'Очистка всех данных');
+                await updateAdminPanel();
+            }
+        }
+
+        function filterLogs() {
+            const search = document.getElementById('logSearch').value.toLowerCase();
+            const logs = document.querySelectorAll('.admin-log-entry');
+            logs.forEach(log => {
+                const text = log.textContent.toLowerCase();
+                log.style.display = text.includes(search) ? 'block' : 'none';
+            });
+        }
+
+        // Музыкальный плеер
+        let audio = document.getElementById('bgMusic');
+        let isPlaying = false;
+        let isMuted = false;
+        let volume = 0.7;
+
+        function updateVolumeDisplay() {
+            document.getElementById('volumeFill').style.width = (volume * 100) + '%';
+            document.getElementById('volumePercent').textContent = Math.round(volume * 100) + '%';
+            audio.volume = volume;
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
+                document.getElementById('playingIndicator').style.display = 'none';
+            } else {
+                audio.play().catch(e => console.log('Аудио не может быть воспроизведено:', e));
+                document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                document.getElementById('playingIndicator').style.display = 'flex';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function setVolume(event) {
+            const slider = event.currentTarget;
+            const rect = slider.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            volume = Math.max(0, Math.min(1, x / rect.width));
+            updateVolumeDisplay();
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            const icon = document.getElementById('volumeIcon');
+            icon.className = isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', async function() {
+            loadCategories();
+            loadModules();
+            loadChallenges();
+            loadResources();
+            loadTerms();
+            
+            await registerVisitor();
+            
+            updateVolumeDisplay();
+            
+            setInterval(() => updateVisitorActivity(window.location.href), 30000);
+            
+            window.addEventListener('click', function(e) {
+                const adminLogin = document.getElementById('adminLogin');
+                if (e.target === adminLogin) {
+                    adminLogin.style.display = 'none';
+                }
+            });
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.category-card, .training-card, .resource-card, .term-card, .stats-card, .challenge-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+            
+            await addLog('page_view', currentIP, 'Загрузка страницы');
+        });
+    </script>
+</body>
+</html>
